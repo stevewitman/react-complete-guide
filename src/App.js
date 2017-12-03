@@ -16,20 +16,15 @@ class App extends Component {
     showPersons: false
   }
 
-  switchNameHandler = () => {
-    let next;
-    if (this.state.currentPerson === this.state.persons.length-1) {
-      this.setState({currentPerson: 0});
-    } else {
-      next = this.state.currentPerson + 1
-      this.setState({currentPerson: next})
-    }
+  deletePersonHandler(personIndex) {
+    // const persons = this.state.persons.slice(); //one way to get a new copy of an array
+    const persons = [...this.state.persons] //modern way to get a new copy of an array
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons}) 
   }
 
   nameChangedHandler = (event) => {
-    console.log("event.target.value: ", event.target.value)
     let updatedPersons = this.state.persons;
-    console.log('updatedPersons: ', updatedPersons)
     updatedPersons[this.state.currentPerson].name = event.target.value;
     this.setState({persons: updatedPersons});
   }
@@ -54,11 +49,12 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-          name={this.state.persons[this.state.currentPerson].name}
-          rank={this.state.persons[this.state.currentPerson].rank}
-          click={this.switchNameHandler}
-          changed={this.nameChangedHandler} />
+          {this.state.persons.map((person, index) => {
+            return <Person 
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
+              rank={person.rank}/>
+          })}
         </div>
       )
     }
