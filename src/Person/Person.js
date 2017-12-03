@@ -1,9 +1,15 @@
 import React from 'react';
+import './Person.css';
 
 const person = (props) => {
+
+    const style = {
+        cursor: 'pointer'
+      }
+
     return (
-        <div>
-            <p onClick={props.click}>{props.name} - {props.rank} {props.children}</p>
+        <div className="Person">
+            <p style={style} onClick={props.click}>{props.name} - {props.rank} {props.children}</p>
             <input type="text" onChange={props.changed} />
         </div>
     )

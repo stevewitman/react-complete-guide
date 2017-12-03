@@ -12,7 +12,8 @@ class App extends Component {
       {name: 'Robin', rank: 'intermediate'},
       {name: 'Kevin', rank: 'beginner'}
     ],
-    currentPerson: 0
+    currentPerson: 0,
+    showPersons: false
   }
 
   switchNameHandler = () => {
@@ -33,16 +34,34 @@ class App extends Component {
     this.setState({persons: updatedPersons});
   }
 
+  togglePersonsHandler = () => {
+    let toggle = !this.state.showPersons
+    this.setState({showPersons: toggle})
+  }
+
   render() {
+
+    const style = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    }
+
     return (
       <div className="App">
         <h1>React Complete Guide</h1>
-        <button onClick={this.switchNameHandler}>Switch</button>
-        <Person
-          name={this.state.persons[this.state.currentPerson].name}
-          rank={this.state.persons[this.state.currentPerson].rank}
-          click={this.switchNameHandler}
-          changed={this.nameChangedHandler} />
+        <button
+          style={style}
+          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        {this.state.showPersons ? <div >
+          <Person
+            name={this.state.persons[this.state.currentPerson].name}
+            rank={this.state.persons[this.state.currentPerson].rank}
+            click={this.switchNameHandler}
+            changed={this.nameChangedHandler} />
+        </div> : null }
       </div>
     );
   }
